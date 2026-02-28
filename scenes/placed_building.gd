@@ -62,6 +62,9 @@ func _rotated_entrance() -> Dictionary:
 	var idx := SIDES.find(base_side)
 	var new_idx := (idx + rotation_index) % 4
 	var new_side : String = SIDES[new_idx]
+	
+	var cur_side : String = entrance.get("side", "south")
+	var cur_off  : int    = entrance.get("offset", 0)
 
 	# When rotating, the offset maps to a new axis.
 	# For a building of size (W, H):
@@ -74,11 +77,12 @@ func _rotated_entrance() -> Dictionary:
 	var w   : int = base_sz.x
 	var h   : int = base_sz.y
 	for _i in range(rotation_index):
-		# Current side dimension before this rotation step
-		var cur_side : String = SIDES[(SIDES.find(base_side) + _i) % 4]
-		var dim := w if (cur_side == "north" or cur_side == "south") else h
-		off = (dim - 1) - off
-		# Swap w and h for next step
+		var prev_side : = cur_side
+		cur_side = SIDES[(SIDES.find(cur_side) + 1) % 4]
+		if prev_side == "east" or prev_side == "west":
+			# Offset ran along X (width) — mirror it, then swap dims
+			cur_off = (w - 1) - cur_off
+		# east/west: offset runs along Z (height) — no mirror needed
 		var tmp := w; w = h; h = tmp
 
 	return { "side": new_side, "offset": off }
