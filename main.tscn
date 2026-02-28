@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bdvx58rwnaeev" path="res://icon.svg" id="1_xhw8e"]
 [ext_resource type="Script" uid="uid://b1tj6uu23e2pk" path="res://camera.gd" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://7frhrh1a2m1d" path="res://grid.gd" id="4_7mycd"]
+[ext_resource type="Script" uid="uid://cubvdmbot0274" path="res://building/world/building_manager.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://ivf3w1x4tpq" path="res://building/ui/sidebar.gd" id="6_272bh"]
 
 [node name="Node2D" type="Node2D" unique_id=66550305]
 script = ExtResource("1_1bvp3")
@@ -20,6 +22,9 @@ script = ExtResource("3_lquwl")
 [node name="Grid" type="Node2D" parent="World" unique_id=893121493]
 script = ExtResource("4_7mycd")
 
+[node name="BuildingManager" type="Node2D" parent="World" unique_id=458268167]
+script = ExtResource("5_7mycd")
+
 [node name="UI" type="CanvasLayer" parent="." unique_id=977739013]
 
 [node name="TopBar" type="PanelContainer" parent="UI" unique_id=1276880573]
@@ -29,20 +34,34 @@ anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/TopBar" unique_id=1516153004]
+[node name="MarginContainer" type="MarginContainer" parent="UI/TopBar" unique_id=1939443281]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/TopBar/MarginContainer" unique_id=1516153004]
 layout_mode = 2
 alignment = 1
 
-[node name="CoordsLabel" type="Label" parent="UI/TopBar/HBoxContainer" unique_id=377369100]
+[node name="CoordsLabel" type="Label" parent="UI/TopBar/MarginContainer/HBoxContainer" unique_id=377369100]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "X: 0 Y: 0"
 horizontal_alignment = 1
 
+[node name="StatusLabel" type="Label" parent="UI/TopBar/MarginContainer/HBoxContainer" unique_id=1058681944]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="SideBar" type="PanelContainer" parent="UI" unique_id=656705590]
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(240, 0)
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("6_272bh")

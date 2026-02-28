@@ -55,16 +55,19 @@ func _draw() -> void:
 	_draw_axes()
 
 func _draw_block_grid(l: int, t: int, r: int, b: int) -> void:
+	# Line width is always 1 screen pixel regardless of zoom
+	var w := 1.0 / current_zoom
 	# Vertical lines
 	for bx in range(l, r + 1):
 		var x := bx * BLOCK_SIZE
-		draw_line(Vector2(x, t * BLOCK_SIZE), Vector2(x, b * BLOCK_SIZE), COLOR_BLOCK_GRID, 0.5)
+		draw_line(Vector2(x, t * BLOCK_SIZE), Vector2(x, b * BLOCK_SIZE), COLOR_BLOCK_GRID, w)
 	# Horizontal lines
 	for bz in range(t, b + 1):
 		var z := bz * BLOCK_SIZE
-		draw_line(Vector2(l * BLOCK_SIZE, z), Vector2(r * BLOCK_SIZE, z), COLOR_BLOCK_GRID, 0.5)
-
+		draw_line(Vector2(l * BLOCK_SIZE, z), Vector2(r * BLOCK_SIZE, z), COLOR_BLOCK_GRID, w)
+		
 func _draw_chunk_grid(l: int, t: int, r: int, b: int) -> void:
+	var w := 1.0 / current_zoom
 	# Chunk lines snap to every 16 blocks, offset by origin
 	var ox := origin_offset.x
 	var oz := origin_offset.y
@@ -76,17 +79,17 @@ func _draw_chunk_grid(l: int, t: int, r: int, b: int) -> void:
 	var bx := cx_start
 	while bx <= r:
 		var x := bx * BLOCK_SIZE
-		draw_line(Vector2(x, t * BLOCK_SIZE), Vector2(x, b * BLOCK_SIZE), COLOR_CHUNK_GRID, 1.0)
+		draw_line(Vector2(x, t * BLOCK_SIZE), Vector2(x, b * BLOCK_SIZE), COLOR_CHUNK_GRID, w)
 		bx += CHUNK_SIZE
 
 	var bz := cz_start
 	while bz <= b:
 		var z := bz * BLOCK_SIZE
-		draw_line(Vector2(l * BLOCK_SIZE, z), Vector2(r * BLOCK_SIZE, z), COLOR_CHUNK_GRID, 1.0)
+		draw_line(Vector2(l * BLOCK_SIZE, z), Vector2(r * BLOCK_SIZE, z), COLOR_CHUNK_GRID, w)
 		bz += CHUNK_SIZE
 
 func _draw_axes() -> void:
-	# Draw world origin axes as colored lines
+	var w := 2.0 / current_zoom
 	var half := DRAW_RADIUS_BLOCKS * BLOCK_SIZE
-	draw_line(Vector2(-half, 0), Vector2(half, 0), COLOR_ORIGIN_Z, 1.5)
-	draw_line(Vector2(0, -half), Vector2(0,  half), COLOR_ORIGIN_X, 1.5)
+	draw_line(Vector2(-half, 0), Vector2(half, 0), COLOR_ORIGIN_Z, w)
+	draw_line(Vector2(0, -half), Vector2(0,  half), COLOR_ORIGIN_X, w)
