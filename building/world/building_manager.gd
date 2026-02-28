@@ -11,16 +11,24 @@ const BLOCK_SIZE := 16
 const PlacedBuildingScript := preload("res://scenes/placed_building.gd")
 
 # ── State ─────────────────────────────────────────────────────────────────────
-var _placed        : Array[Node2D] = []
-var _selected      : Node2D        = null
-var _ghost_id      : String        = ""
-var _ghost_node    : Node2D        = null
-var _ghost_rot     : int           = 0      # rotation_index for the current ghost
-var current_zoom   : float         = 1.0
+var _placed       : Array[Node2D] = []
+var _selected     : Node2D        = null
+
+# Placement ghost
+var _ghost_id     : String        = ""
+var _ghost_node   : Node2D        = null
+var _ghost_rot    : int           = 0
+
+# Move mode — reposition an already-placed building
+var _moving       : Node2D        = null   # building being moved
+var _move_orig_pos: Vector2i      = Vector2i.ZERO
+
+var current_zoom  : float         = 1.0
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
 func start_placement(bid: String) -> void:
+	_stop_move()
 	_cancel_placement()
 	_ghost_id   = bid
 	_ghost_rot  = 0
@@ -30,6 +38,13 @@ func start_placement(bid: String) -> void:
 func cancel_placement() -> void:
 	_cancel_placement()
 	placement_cancelled.emit()
+
+## Begin moving an already-placed building.
+func start_move(building_node: Node2D) -> void:
+	_cancel_placement()
+	_moving        = building_node
+	_move_orig_pos = building_node.grid_pos
+	building_node.modulate = Color(1, 1, 1, 0.5)
 
 func delete_selected() -> void:
 	if _selected == null:
@@ -43,10 +58,11 @@ func serialize() -> Array:
 	var out : Array = []
 	for b in _placed:
 		out.append({
-			"id":       b.building_id,
-			"pos":      { "x": b.grid_pos.x, "z": b.grid_pos.y },
-			"label":    b.instance_label,
-			"rotation": b.rotation_index
+			"id":        b.building_id,
+			"pos":       { "x": b.grid_pos.x, "z": b.grid_pos.y },
+			"label":     b.instance_label,
+			"rotation":  b.rotation_index,
+			"colonists": b.get_meta("colonists", [])
 		})
 	return out
 
@@ -61,16 +77,24 @@ func deserialize(data: Array) -> void:
 		var rot  : int      = entry.get("rotation", 0)
 		var node := _place_building(bid, gpos, rot)
 		node.instance_label = entry.get("label", "")
+		node.set_meta("colonists", entry.get("colonists", []))
 
 # ── Input ─────────────────────────────────────────────────────────────────────
 
 func _unhandled_input(event: InputEvent) -> void:
+	# ── Mouse motion — update ghost or moving building preview ────────────────
 	if event is InputEventMouseMotion:
+		var snapped := _snapped_world_pos(event.position)
 		if _ghost_node != null:
-			_ghost_node.position = _snapped_world_pos(event.position)
+			_ghost_node.position    = snapped
 			_ghost_node.current_zoom = current_zoom
 			_ghost_node.queue_redraw()
+		elif _moving != null:
+			_moving.grid_pos = _world_to_grid(snapped)
+			_moving.position = snapped
+			_moving.queue_redraw()
 
+	# ── Mouse buttons ─────────────────────────────────────────────────────────
 	elif event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if not mb.pressed:
@@ -78,40 +102,65 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if mb.button_index == MOUSE_BUTTON_LEFT:
 			if _ghost_node != null:
+				# Confirm placement
 				var gpos := _world_to_grid(_snapped_world_pos(mb.position))
 				_place_building(_ghost_id, gpos, _ghost_rot)
 				if not Input.is_key_pressed(KEY_SHIFT):
 					_cancel_placement()
+			elif _moving != null:
+				# Confirm move
+				_moving.modulate = Color(1, 1, 1, 1)
+				var sel := _moving
+				_moving = null
+				_select(sel)
 			else:
 				_try_select(mb.position)
 
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
 			if _ghost_node != null:
 				cancel_placement()
+			elif _moving != null:
+				# Cancel move — restore original position
+				_moving.grid_pos = _move_orig_pos
+				_moving.position = Vector2(_move_orig_pos) * BLOCK_SIZE
+				_moving.modulate = Color(1, 1, 1, 1)
+				var sel := _moving
+				_moving = null
+				_select(sel)
 
+	# ── Keyboard ──────────────────────────────────────────────────────────────
 	elif event is InputEventKey:
 		var ke := event as InputEventKey
 		if not ke.pressed:
 			return
-
 		match ke.keycode:
 			KEY_ESCAPE:
 				if _ghost_node != null:
 					cancel_placement()
+				elif _moving != null:
+					# Cancel move
+					_moving.grid_pos = _move_orig_pos
+					_moving.position = Vector2(_move_orig_pos) * BLOCK_SIZE
+					_moving.modulate = Color(1, 1, 1, 1)
+					var sel := _moving
+					_moving = null
+					_select(sel)
 				elif _selected != null:
 					_deselect()
 			KEY_DELETE:
 				delete_selected()
 			KEY_R:
-				# Rotate ghost OR selected building
 				if _ghost_node != null:
 					_ghost_rot = (_ghost_rot + 1) % 4
 					_ghost_node.rotation_index = _ghost_rot
 					_ghost_node.queue_redraw()
+				elif _moving != null:
+					_moving.rotation_index = (_moving.rotation_index + 1) % 4
+					_moving.queue_redraw()
 				elif _selected != null:
 					_selected.rotation_index = (_selected.rotation_index + 1) % 4
 					_selected.queue_redraw()
-					building_selected.emit(_selected)   # refresh status bar
+					building_selected.emit(_selected)
 
 # ── Zoom update ───────────────────────────────────────────────────────────────
 
@@ -124,7 +173,7 @@ func on_zoom_changed(z: float) -> void:
 		_ghost_node.current_zoom = z
 		_ghost_node.queue_redraw()
 
-# ── Internal helpers ──────────────────────────────────────────────────────────
+# ── Internal ──────────────────────────────────────────────────────────────────
 
 func _place_building(bid: String, gpos: Vector2i, rot: int) -> Node2D:
 	var node := _make_building_node(bid, gpos, rot, false)
@@ -135,8 +184,8 @@ func _place_building(bid: String, gpos: Vector2i, rot: int) -> Node2D:
 func _make_building_node(bid: String, gpos: Vector2i, rot: int, is_ghost: bool) -> Node2D:
 	var node := Node2D.new()
 	node.set_script(PlacedBuildingScript)
-	node.current_zoom    = current_zoom
-	node.rotation_index  = rot
+	node.current_zoom   = current_zoom
+	node.rotation_index = rot
 	node.setup(bid, gpos)
 	if is_ghost:
 		node.modulate = Color(1, 1, 1, 0.5)
@@ -148,6 +197,11 @@ func _cancel_placement() -> void:
 		_ghost_node = null
 	_ghost_id  = ""
 	_ghost_rot = 0
+
+func _stop_move() -> void:
+	if _moving != null:
+		_moving.modulate = Color(1, 1, 1, 1)
+		_moving = null
 
 func _try_select(screen_pos: Vector2) -> void:
 	var block_pos := _world_to_grid(_screen_to_world(screen_pos))

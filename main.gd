@@ -1,13 +1,14 @@
 extends Node
 
-## Main scene — wires camera, grid, building manager and sidebar together.
+## Main scene — wires camera, grid, building manager, sidebar, and inspector.
 
 @onready var grid             : Node2D         = $World/Grid
 @onready var camera           : Camera2D       = $Camera2D
 @onready var building_manager : Node2D         = $World/BuildingManager
-@onready var sidebar          : PanelContainer = $UI/SideBar
-@onready var coords_label     : Label          = $UI/TopBar/MarginContainer/HBoxContainer/CoordsLabel
-@onready var status_label     : Label          = $UI/TopBar/MarginContainer/HBoxContainer/StatusLabel
+@onready var sidebar          : PanelContainer = $UI/Sidebar
+@onready var inspector        : PanelContainer = $UI/Inspector
+@onready var coords_label     : Label          = $UI/TopBar/MarginContainer/HBox/CoordsLabel
+@onready var status_label     : Label          = $UI/TopBar/MarginContainer/HBox/StatusLabel
 
 func _ready() -> void:
 	camera.zoom_changed.connect(_on_zoom_changed)
@@ -15,6 +16,8 @@ func _ready() -> void:
 	building_manager.placement_cancelled.connect(_on_placement_cancelled)
 	building_manager.building_selected.connect(_on_building_selected)
 	building_manager.building_deselected.connect(_on_building_deselected)
+	inspector.move_requested.connect(_on_move_requested)
+	inspector.delete_requested.connect(_on_delete_requested)
 
 func _process(_delta: float) -> void:
 	_update_coords_label()
@@ -25,6 +28,7 @@ func _on_zoom_changed(new_zoom: float) -> void:
 	building_manager.on_zoom_changed(new_zoom)
 
 func _on_building_picked(bid: String) -> void:
+	inspector.close()
 	building_manager.start_placement(bid)
 	var bname : String = BuildingDB.get_building(bid).get("name", bid)
 	status_label.text = "Placing: %s  |  R rotate · SHIFT+LMB keep placing · RMB cancel" % bname
@@ -34,14 +38,26 @@ func _on_placement_cancelled() -> void:
 	status_label.text = ""
 
 func _on_building_selected(instance: Node2D) -> void:
+	inspector.inspect(instance)
 	var bname  : String = BuildingDB.get_building(instance.building_id).get("name", instance.building_id)
-	var pos            : Vector2 = instance.grid_pos
 	const ROT_LABELS   := ["0°", "90°", "180°", "270°"]
-	var rot_label      : String = ROT_LABELS[instance.rotation_index]
-	status_label.text  = "%s at (%d, %d)  rot %s  |  R rotate · DEL delete" % [bname, pos.x, pos.y, rot_label]
+	status_label.text  = "%s  rot %s  |  R rotate · DEL delete · Move in inspector" % [
+		bname, ROT_LABELS[instance.rotation_index]
+	]
 
 func _on_building_deselected() -> void:
+	inspector.close()
 	status_label.text = ""
+
+func _on_move_requested() -> void:
+	if building_manager._selected != null:
+		building_manager.start_move(building_manager._selected)
+		inspector.close()
+		status_label.text = "Moving — LMB confirm · RMB / ESC cancel · R rotate"
+
+func _on_delete_requested() -> void:
+	inspector.close()
+	building_manager.delete_selected()
 
 func _update_coords_label() -> void:
 	var mouse_screen := get_viewport().get_mouse_position()
