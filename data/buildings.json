@@ -7,7 +7,7 @@
 	  "category": "Fundamentals",
 	  "subcategory": null,
 	  "size": { "x": 9, "z": 9 },
-	  "entrance": { "side": "south", "offset": 4 },
+	  "entrance": { "side": "south", "offset": 2 },
 	  "color": "#e8c84a",
 	  "description": "Colony origin building. Required.",
 	  "max_level": 5,

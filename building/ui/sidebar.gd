@@ -163,7 +163,7 @@ func _make_subcat_label(subcat: String) -> Control:
 	return panel
 
 func _make_building_row(bid: String, indented: bool) -> Control:
-	var bdef := BuildingDB.get_building(bid)
+	var bdef : Dictionary = BuildingDB.get_building(bid)
 
 	# Clickable container
 	var panel := PanelContainer.new()
@@ -202,7 +202,7 @@ func _make_building_row(bid: String, indented: bool) -> Control:
 	hbox.add_child(name_lbl)
 
 	# Size
-	var sz := BuildingDB.get_size(bid)
+	var sz : Vector2i = BuildingDB.get_size(bid)
 	var size_lbl := Label.new()
 	size_lbl.text = "%dx%d" % [sz.x, sz.y]
 	size_lbl.add_theme_color_override("font_color", COLOR_TEXT_DIM)

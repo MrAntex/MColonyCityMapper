@@ -43,7 +43,7 @@ func get_rect_blocks() -> Rect2i:
 
 ## Rotated size: x and z swap on 90/270.
 func _rotated_size() -> Vector2i:
-	var sz := BuildingDB.get_size(building_id)
+	var sz : Vector2i = BuildingDB.get_size(building_id)
 	if rotation_index % 2 == 1:
 		return Vector2i(sz.y, sz.x)
 	return sz
@@ -51,13 +51,13 @@ func _rotated_size() -> Vector2i:
 ## Rotates the entrance side by rotation_index steps clockwise.
 ## Order: north → east → south → west → north
 func _rotated_entrance() -> Dictionary:
-	var entrance := BuildingDB.get_entrance(building_id)
+	var entrance : Dictionary = BuildingDB.get_entrance(building_id)
 	if entrance.is_empty():
 		return {}
 	const SIDES := ["north", "east", "south", "west"]
 	var base_side   : String = entrance.get("side", "south")
 	var base_offset : int    = entrance.get("offset", 0)
-	var base_sz     := BuildingDB.get_size(building_id)
+	var base_sz     : Vector2i = BuildingDB.get_size(building_id)
 
 	var idx := SIDES.find(base_side)
 	var new_idx := (idx + rotation_index) % 4
@@ -71,8 +71,8 @@ func _rotated_entrance() -> Dictionary:
 	# and the offset along the top (x) becomes an offset down the right side (z).
 	# The formula below tracks how the offset transforms through each 90° step.
 	var off := base_offset
-	var w   := base_sz.x
-	var h   := base_sz.y
+	var w   : int = base_sz.x
+	var h   : int = base_sz.y
 	for _i in range(rotation_index):
 		# Current side dimension before this rotation step
 		var cur_side : String = SIDES[(SIDES.find(base_side) + _i) % 4]
@@ -91,7 +91,7 @@ func _draw() -> void:
 	var px_w := sz.x * BLOCK_SIZE
 	var px_h := sz.y * BLOCK_SIZE
 	var lw   := 1.5 / current_zoom
-	var base_color := BuildingDB.get_color(building_id)
+	var base_color : Color = BuildingDB.get_color(building_id)
 
 	# ── Fill ──────────────────────────────────────────────────────────────────
 	var fill := base_color
