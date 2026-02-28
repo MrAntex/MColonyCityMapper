@@ -1,0 +1,7 @@
+Node2D
+PanelContainer
+Label
+MarginContainer
+HBoxContainer
+CanvasLayer
+Camera2D

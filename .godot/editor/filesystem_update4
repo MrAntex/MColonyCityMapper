@@ -1,0 +1,11 @@
+res://main.tscn
+res://main.gd
+res://camera.gd
+res://data/buildings.json
+res://data/building_db.gd
+res://grid.gd
+res://building/world/building_manager.gd
+res://scenes/placed_building.gd
+res://building/ui/sidebar.gd
+res://inspector.gd
+res://overlay_manager.gd
