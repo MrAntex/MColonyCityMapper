@@ -1,0 +1,499 @@
+{
+  "buildings": [
+
+	{
+	  "id": "townhall",
+	  "name": "Town Hall",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#e8c84a",
+	  "description": "Colony origin building. Required.",
+	  "max_level": 5,
+	  "adds_chunks": 2
+	},
+	{
+	  "id": "builder",
+	  "name": "Builder's Hut",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#e55039",
+	  "description": "Required for all construction.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "warehouse",
+	  "name": "Warehouse",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 13, "z": 13 },
+	  "entrance": { "side": "south", "offset": 6 },
+	  "color": "#d35400",
+	  "description": "Central storage for all colony resources.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "deliveryman",
+	  "name": "Courier's Hut",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#f39c12",
+	  "description": "Courier moves items between buildings.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "citizen_hut",
+	  "name": "Citizen Hut",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#6ab04c",
+	  "description": "Houses up to 2 colonists per level.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "tavern",
+	  "name": "Tavern",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 11, "z": 11 },
+	  "entrance": { "side": "south", "offset": 5 },
+	  "color": "#8e44ad",
+	  "description": "Attracts visitors who may join the colony.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "farm",
+	  "name": "Farm",
+	  "category": "Agriculture",
+	  "subcategory": "Horticulture",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#27ae60",
+	  "description": "Grows crops for the colony.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "composter",
+	  "name": "Composter's Hut",
+	  "category": "Agriculture",
+	  "subcategory": "Horticulture",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#2ecc71",
+	  "description": "Produces compost/bonemeal from organic waste.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "florist",
+	  "name": "Florist's Hut",
+	  "category": "Agriculture",
+	  "subcategory": "Horticulture",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#1abc9c",
+	  "description": "Grows flowers for the colony.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "forester",
+	  "name": "Forester's Hut",
+	  "category": "Agriculture",
+	  "subcategory": "Horticulture",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#16a085",
+	  "description": "Chops and replants trees.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "plantation",
+	  "name": "Plantation",
+	  "category": "Agriculture",
+	  "subcategory": "Horticulture",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#138d75",
+	  "description": "Grows sugar cane, cactus, bamboo, etc.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "animal_herder",
+	  "name": "Animal Herder",
+	  "category": "Agriculture",
+	  "subcategory": "Husbandry",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#a9cce3",
+	  "description": "Breeds and manages farm animals.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "rabbit_herder",
+	  "name": "Rabbit Herder",
+	  "category": "Agriculture",
+	  "subcategory": "Husbandry",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#aed6f1",
+	  "description": "Breeds and manages rabbits.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "beekeeper",
+	  "name": "Beekeeper's Hut",
+	  "category": "Agriculture",
+	  "subcategory": "Husbandry",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#f9ca24",
+	  "description": "Manages beehives and produces honey.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "fisher",
+	  "name": "Fisher's Hut",
+	  "category": "Agriculture",
+	  "subcategory": "Husbandry",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#2980b9",
+	  "description": "Catches fish from nearby water.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "sawmill",
+	  "name": "Sawmill",
+	  "category": "Craftsmanship",
+	  "subcategory": "Carpentry",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#ca8a04",
+	  "description": "Crafts wood-based items and planks.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "fletcher",
+	  "name": "Fletcher's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Carpentry",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#b7950b",
+	  "description": "Crafts bows, arrows, and fishing rods.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "dyer",
+	  "name": "Dyer's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Luxury",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#e74c3c",
+	  "description": "Dyes wool and other items.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "glassblower",
+	  "name": "Glassblower's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Luxury",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#85c1e9",
+	  "description": "Produces glass and glass panes.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "stonemason",
+	  "name": "Stonemason's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Masonry",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#95a5a6",
+	  "description": "Crafts stone-based blocks and items.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "crusher",
+	  "name": "Crusher's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Masonry",
+	  "size": { "x": 7, "z": 7 },
+	  "entrance": { "side": "south", "offset": 3 },
+	  "color": "#7f8c8d",
+	  "description": "Crushes blocks into smaller components.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "smeltery",
+	  "name": "Smeltery",
+	  "category": "Craftsmanship",
+	  "subcategory": "Metallurgy",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#e67e22",
+	  "description": "Smelts ores and metals.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "blacksmith",
+	  "name": "Blacksmith's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Metallurgy",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#d35400",
+	  "description": "Crafts metal tools and armor.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "mechanic",
+	  "name": "Mechanic's Hut",
+	  "category": "Craftsmanship",
+	  "subcategory": "Metallurgy",
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#c0392b",
+	  "description": "Crafts redstone and mechanical components.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "rack",
+	  "name": "Rack",
+	  "category": "Craftsmanship",
+	  "subcategory": "Storage",
+	  "size": { "x": 1, "z": 1 },
+	  "entrance": { "side": "south", "offset": 0 },
+	  "color": "#a04000",
+	  "description": "Single-block storage rack.",
+	  "max_level": 1,
+	  "adds_chunks": 0
+	},
+	{
+	  "id": "stash",
+	  "name": "Stash",
+	  "category": "Craftsmanship",
+	  "subcategory": "Storage",
+	  "size": { "x": 3, "z": 3 },
+	  "entrance": { "side": "south", "offset": 1 },
+	  "color": "#935116",
+	  "description": "Small overflow storage.",
+	  "max_level": 3,
+	  "adds_chunks": 0
+	},
+
+	{
+	  "id": "school",
+	  "name": "School",
+	  "category": "Education",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#9b59b6",
+	  "description": "Educates young colonists.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "library",
+	  "name": "Library",
+	  "category": "Education",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#8e44ad",
+	  "description": "Raises colonist intelligence.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "university",
+	  "name": "University",
+	  "category": "Education",
+	  "subcategory": null,
+	  "size": { "x": 11, "z": 11 },
+	  "entrance": { "side": "south", "offset": 5 },
+	  "color": "#6c3483",
+	  "description": "Researches colony-wide upgrades.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "barracks",
+	  "name": "Barracks",
+	  "category": "Military",
+	  "subcategory": null,
+	  "size": { "x": 17, "z": 17 },
+	  "entrance": { "side": "south", "offset": 8 },
+	  "color": "#c0392b",
+	  "description": "Houses and trains soldiers.",
+	  "max_level": 5,
+	  "adds_chunks": 2
+	},
+	{
+	  "id": "guard_tower",
+	  "name": "Guard Tower",
+	  "category": "Military",
+	  "subcategory": null,
+	  "size": { "x": 5, "z": 5 },
+	  "entrance": { "side": "south", "offset": 2 },
+	  "color": "#e74c3c",
+	  "description": "Stationary guard post.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "archer_barracks",
+	  "name": "Archer Barracks",
+	  "category": "Military",
+	  "subcategory": null,
+	  "size": { "x": 13, "z": 13 },
+	  "entrance": { "side": "south", "offset": 6 },
+	  "color": "#cb4335",
+	  "description": "Trains and houses archer soldiers.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "combat_academy",
+	  "name": "Combat Academy",
+	  "category": "Military",
+	  "subcategory": null,
+	  "size": { "x": 11, "z": 11 },
+	  "entrance": { "side": "south", "offset": 5 },
+	  "color": "#922b21",
+	  "description": "Trains soldiers in melee combat.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "hospital",
+	  "name": "Hospital",
+	  "category": "Mystic",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#f8c471",
+	  "description": "Heals injured colonists.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "enchanter",
+	  "name": "Enchanter's Tower",
+	  "category": "Mystic",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#5b2c6f",
+	  "description": "Enchants tools and armor for colonists.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "nether_worker",
+	  "name": "Nether Worker's Hut",
+	  "category": "Mystic",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#922b21",
+	  "description": "Produces nether-related resources.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "cook",
+	  "name": "Cook's Hut",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#e8daef",
+	  "description": "Cooks and distributes food to colonists.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "restaurant",
+	  "name": "Restaurant",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#d2b4de",
+	  "description": "Feeds colonists from a central location.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+
+	{
+	  "id": "mine",
+	  "name": "Mine",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 9, "z": 9 },
+	  "entrance": { "side": "south", "offset": 4 },
+	  "color": "#717d7e",
+	  "description": "Digs down for ores and stone.",
+	  "max_level": 5,
+	  "adds_chunks": 1
+	},
+	{
+	  "id": "quarry",
+	  "name": "Quarry",
+	  "category": "Fundamentals",
+	  "subcategory": null,
+	  "size": { "x": 11, "z": 11 },
+	  "entrance": { "side": "south", "offset": 5 },
+	  "color": "#808b96",
+	  "description": "Mines stone and cobblestone in large quantities.",
+	  "max_level": 3,
+	  "adds_chunks": 1
+	}
+
+  ]
+}
